@@ -1,0 +1,7 @@
+# Ignore all files and subdirectories within a directory
+/data/*
+/Wids2024DevEnv/*
+
+# Ignore all .DS_Store, .zip files
+*.DS_Store
+*.zip
