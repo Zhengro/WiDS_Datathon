@@ -14,8 +14,17 @@ python3 -m pip install kaggle
 # change the shebang line in the kaggle script from a hardcoded path to #!/usr/bin/env python3
 ```
 ```
-# download data
+# download data and change permissions
 kaggle competitions download -c widsdatathon2024-challenge1
 mkdir data
 unzip widsdatathon2024-challenge1.zip -d data
+find data/ -type f -name "*.csv" -exec chmod 444 {} \;
 ```
+## Notebook Style
+```markdown
+To color `Text` red: <span style="color: red;">Text</span>
+```
+Used color codes:
+- orange: #ffa500
+- yellow #ffed29
+- blue #57b9ff
