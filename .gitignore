@@ -1,6 +1,7 @@
 # Ignore all files and subdirectories within a directory
 /data/*
 /Wids2024DevEnv/*
+*/__pycache__/*
 
 # Ignore all .DS_Store, .zip files
 *.DS_Store
