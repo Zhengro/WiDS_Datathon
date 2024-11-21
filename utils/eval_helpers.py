@@ -72,7 +72,7 @@ def rank_features_by_importance(
             num_features_to_print)['Feature'].tolist()
         print(f'{num_features_to_print} Most Important Features: \n{top_features}')
         print(f'{num_features_to_print} Least Important Features: \n{
-              bottom_features}')
+              bottom_features}\n')
 
     return feature_importance
 
@@ -138,7 +138,7 @@ def evaluate_binary_classifier(
         print_report: bool = False,
         predict_edge_cases: bool = False,
         df_edge_cases: Optional[pd.DataFrame] = None,
-        edge_case_prediction_indices:
+        edge_case_evaluation_indices:
         Optional[List[int]] = None) -> Tuple[pd.DataFrame, Optional[pd.DataFrame]]:
     """
     Evaluates a binary classifier model on validation data and 
@@ -154,7 +154,7 @@ def evaluate_binary_classifier(
     - predict_edge_cases (bool): Whether to predict edge cases. Defaults to False.
     - df_edge_cases (Optional[pd.DataFrame]): 
         DataFrame containing edge cases. Required if `predict_edge_cases` is True.
-    - edge_case_prediction_indices (Optional[List[int]]): 
+    - edge_case_evaluation_indices (Optional[List[int]]): 
         Indices of the edge cases in the validation set. Required if `predict_edge_cases` is True.
 
     Returns:
@@ -170,14 +170,17 @@ def evaluate_binary_classifier(
         print(classification_report(y_val, y_pred))
 
     if predict_edge_cases:
-        if df_edge_cases is None or edge_case_prediction_indices is None:
+        if df_edge_cases is None or edge_case_evaluation_indices is None:
             raise ValueError(
-                "Both df_edge_cases and edge_case_prediction_indices\
+                "Both df_edge_cases and edge_case_evaluation_indices\
                     must be provided when predict_edge_cases is True.")
         validate_column_exists(df_edge_cases, 'partition')
+        validate_column_exists(df_edge_cases, 'probability')
         validate_column_exists(df_edge_cases, 'prediction')
 
         df_edge_cases.loc[df_edge_cases['partition'] == 'validation',
-                          'prediction'] = y_pred[edge_case_prediction_indices]
+                          'probability'] = y_prob[edge_case_evaluation_indices]
+        df_edge_cases.loc[df_edge_cases['partition'] == 'validation',
+                          'prediction'] = y_pred[edge_case_evaluation_indices]
 
     return scores_df, df_edge_cases
