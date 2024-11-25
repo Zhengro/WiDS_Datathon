@@ -25,6 +25,4 @@ find data/ -type f -name "*.csv" -exec chmod 444 {} \;
 To color `Text` red: <span style="color: red;">Text</span>
 ```
 Used color codes:
-- orange: #ffa500
-- yellow #ffed29
 - blue #57b9ff

@@ -1,6 +1,9 @@
 """
-A collection of utility functions for evaluating binary classification models, 
-including feature importance, metrics on the validation set, and predictions for edge cases.
+A collection of utility functions for evaluating binary classification models, including 
+- feature importance, 
+- metrics on the validation set, 
+- predictions for edge cases, 
+- and samples with high absolute errors.
 """
 
 from typing import List, Optional, Tuple, Union
@@ -139,7 +142,10 @@ def evaluate_binary_classifier(
         predict_edge_cases: bool = False,
         df_edge_cases: Optional[pd.DataFrame] = None,
         edge_case_evaluation_indices:
-        Optional[List[int]] = None) -> Tuple[pd.DataFrame, Optional[pd.DataFrame]]:
+        Optional[List[int]] = None,
+        rank_samples: bool = False,
+        df_validation: Optional[pd.DataFrame] = None
+) -> Tuple[pd.DataFrame, Optional[pd.DataFrame], Optional[pd.DataFrame]]:
     """
     Evaluates a binary classifier model on validation data and 
     optionally prints a classification report and predicts edge cases.
@@ -156,11 +162,16 @@ def evaluate_binary_classifier(
         DataFrame containing edge cases. Required if `predict_edge_cases` is True.
     - edge_case_evaluation_indices (Optional[List[int]]): 
         Indices of the edge cases in the validation set. Required if `predict_edge_cases` is True.
+    - rank_samples (bool): Whether to rank samples by their absolute errors. Defaults to False.
+    - df_validation (Optional[pd.DataFrame]): 
+        DataFrame containing original data corresponding to validation set. 
+        Required if `rank_samples` is True.
 
     Returns:
-    - Tuple[pd.DataFrame, Optional[pd.DataFrame]]: 
-        A tuple containing the scores DataFrame and 
-        the updated edge cases DataFrame (if applicable).
+    - Tuple[pd.DataFrame, Optional[pd.DataFrame], Optional[pd.DataFrame]]: 
+        A tuple containing the scores DataFrame, 
+        the updated edge cases DataFrame (if applicable),
+        the updated validation DataFrame (if applicable).
     """
     y_pred = model.predict(x_val)
     y_prob = model.predict_proba(x_val)[:, 1]
@@ -183,4 +194,12 @@ def evaluate_binary_classifier(
         df_edge_cases.loc[df_edge_cases['partition'] == 'validation',
                           'prediction'] = y_pred[edge_case_evaluation_indices]
 
-    return scores_df, df_edge_cases
+    if rank_samples:
+        if df_validation is None:
+            raise ValueError(
+                "df_validation must be provided when rank_samples is True.")
+        df_validation['absolute_error'] = abs(y_val - y_prob)
+        df_validation.sort_values(
+            by='absolute_error', ascending=False, inplace=True)
+
+    return scores_df, df_edge_cases, df_validation
