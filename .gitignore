@@ -1,8 +1,11 @@
-# Ignore all files and subdirectories within a directory
+# Ignore all files and subdirectories within certain directories
 /data/*
+/runs/*
 /Wids2024DevEnv/*
 */__pycache__/*
 
-# Ignore all .DS_Store, .zip files
-*.DS_Store
+# Ignore certain files
+*.csv
+*.pkl
 *.zip
+*.DS_Store
