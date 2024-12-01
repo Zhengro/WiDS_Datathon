@@ -2,6 +2,7 @@
 /data/*
 /runs/*
 /Wids2024DevEnv/*
+/workshops/*
 */__pycache__/*
 
 # Ignore certain files
