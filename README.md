@@ -2,6 +2,6 @@
 
 **Year 2024**
 
-[![Challenge #1](https://img.shields.io/badge/Kaggle-Challenge-blueviolet)](https://www.kaggle.com/competitions/widsdatathon2024-challenge1/overview)
-[![Solution](https://img.shields.io/badge/View%20Solution-Notebook-brightgreen)](widsdatathon2024-challenge1.ipynb)
-[![Requirements](https://img.shields.io/badge/requirements-see%20file-blue)](./requirements.txt)
+[![Challenge #1](https://img.shields.io/badge/kaggle-challenge-blueviolet)](https://www.kaggle.com/competitions/widsdatathon2024-challenge1/overview)
+[![Readme](https://img.shields.io/badge/set%20up-README-blue)](widsdatathon2024/README.md)
+[![Solution](https://img.shields.io/badge/view%20solution-notebook-brightgreen)](widsdatathon2024/widsdatathon2024-challenge1.ipynb)

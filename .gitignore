@@ -1,12 +1,10 @@
-# Ignore all files and subdirectories within certain directories
-/data/*
-/runs/*
-/Wids2024DevEnv/*
-/workshops/*
-*/__pycache__/*
-
-# Ignore certain files
+.vscode/
+.DS_Store
+__pycache__/
+venv*
+data/*
+runs/*
+workshops/*
 *.csv
 *.pkl
 *.zip
-*.DS_Store
